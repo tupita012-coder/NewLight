@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewLight</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(5, 5, 15, 0.95) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(8, 8, 25, 0.9) 0%, transparent 40%),
+                linear-gradient(145deg, #04040c 0%, #090916 30%, #0d0d20 60%, #12122b 100%);
+            position: relative;
+            overflow: hidden;
+            color: #e6f0ff;
+        }
+
+        /* Контурные линии фона */
+        .grid-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(60, 100, 180, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(60, 100, 180, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+            animation: gridMove 40s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(20px, 20px); }
+        }
+
+        /* Плавающие геометрические формы */
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            border: 1px solid rgba(100, 150, 255, 0.3);
+            animation: floatShape 25s infinite linear;
+        }
+
+        .shape-1 {
+            width: 120px;
+            height: 120px;
+            top: 15%;
+            left: 10%;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        }
+
+        .shape-2 {
+            width: 80px;
+            height: 80px;
+            top: 70%;
+            right: 15%;
+            border-radius: 50%;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            bottom: 20%;
+            left: 20%;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        }
+
+        @keyframes floatShape {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -20px) rotate(120deg); }
+            66% { transform: translate(-20px, 15px) rotate(240deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        /* Эффект звездного неба */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            animation: twinkle 3s infinite alternate;
+        }
+        
+        @keyframes twinkle {
+            0% { 
+                opacity: 0.3; 
+                box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+            }
+            100% { 
+                opacity: 1; 
+                box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        /* Стили для контейнера */
+        .container {
+            background: rgba(12, 12, 28, 0.7);
+            backdrop-filter: blur(25px);
+            border-radius: 35px;
+            padding: 70px 50px;
+            text-align: center;
+            box-shadow: 
+                0 30px 60px rgba(0,
+
+
+0, 0, 0.9),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 0 0 1px rgba(80, 120, 200, 0.1),
+                0 0 0 2px rgba(60, 100, 180, 0.05);
+            border: 1px solid rgba(100, 140, 220, 0.15);
+            position: relative;
+            z-index: 3;
+            max-width: 850px;
+            width: 90%;
+            margin: 20px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        /* Эффект свечения вокруг контейнера */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(80, 120, 200, 0.2) 50%, 
+                transparent 70%);
+            border-radius: 38px;
+            z-index: -1;
+            opacity: 0;
+            animation: containerGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes containerGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Эффект внутреннего свечения */
+        .container::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border-radius: 25px;
+            background: linear-gradient(135deg, 
+                rgba(100, 150, 255, 0.03) 0%, 
+                transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Стили для заголовка */
+        .title-container {
+            position: relative;
+            margin-bottom: 50px;
+            perspective: 1000px;
+        }
+
+        .title {
+            font-size: 5.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, 
+                #b0d0ff 0%, 
+                #90b8ff 25%, 
+                #70a0ff 50%, 
+                #90b8ff 75%, 
+                #b0d0ff 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: 
+                titleGradient 8s ease infinite,
+                titleFloat 6s ease-in-out infinite;
+            text-shadow: 
+                0 2px 8px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(100, 150, 255, 0.15);
+            letter-spacing: 4px;
+            position: relative;
+            padding: 25px 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes titleGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .title::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(120, 160, 255, 0.6), 
+                transparent);
+            animation: scanLine 4s linear infinite;
+        }
+
+        @keyframes scanLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .title::after {
+            content: 'NewLight';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            z-index: -1;
+            color: transparent;
+            background: linear-gradient(135deg, 
+                transparent 0%, 
+                rgba(0, 0, 0, 0.8) 50%, 
+                transparent 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            filter: blur(8px);
+
+
+animation: titleShadow 8s ease infinite;
+        }
+
+        @keyframes titleShadow {
+            0% { opacity: 0.3; transform: translate(2px, 2px); }
+            50% { opacity: 0.6; transform: translate(-1px, -1px); }
+            100% { opacity: 0.3; transform: translate(2px, 2px); }
+        }
+
+        /* Подзаголовок */
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(180, 200, 255, 0.7);
+            margin-top: 15px;
+            letter-spacing: 2px;
+            font-weight: 300;
+            animation: fadeInUp 1.5s ease 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Стили для кнопки */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, 
+                rgba(70, 110, 190, 0.9) 0%, 
+                rgba(50, 90, 170, 0.9) 50%, 
+                rgba(30, 70, 150, 0.9) 100%);
+            color: #e8f0ff;
+            font-size: 1.8rem;
+            font-weight: 700;
+            padding: 24px 75px;
+            border-radius: 65px;
+            text-decoration: none;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 0 0 1px rgba(100, 150, 220, 0.2),
+                0 0 0 2px rgba(80, 130, 200, 0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            letter-spacing: 1.5px;
+            z-index: 1;
+            animation: buttonPulse 3s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% { 
+                box-shadow: 
+                    0 15px 35px rgba(0, 0, 0, 0.6),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                    0 0 0 1px rgba(100, 150, 220, 0.2),
+                    0 0 0 2px rgba(80, 130, 200, 0.1);
+            }
+            50% { 
+                box-shadow: 
+                    0 20px 40px rgba(0, 0, 0, 0.7),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                    0 0 0 1px rgba(120, 170, 230, 0.3),
+                    0 0 0 2px rgba(100, 150, 220, 0.2);
+            }
+        }
+        
+        .download-btn i {
+            margin-right: 18px;
+            font-size: 1.9rem;
+            transition: all 0.4s ease;
+            color: #d0e5ff;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                0 0 0 2px rgba(140, 180, 240, 0.3),
+                0 0 0 4px rgba(120, 160, 220, 0.2);
+            background: linear-gradient(135deg, 
+                rgba(90, 130, 210, 0.9) 0%, 
+                rgba(70, 110, 190, 0.9) 50%, 
+                rgba(50, 90, 170, 0.9) 100%);
+            color: #ffffff;
+            animation: none;
+        }
+        
+        .download-btn:hover i {
+            transform: translateY(-3px) rotate(20deg) scale(1.1);
+            color: #ffffff;
+        }
+        
+        .download-btn:active {
+            transform: translateY(-4px) scale(1.02);
+            transition: all 0.1s ease;
+        }
+        
+        /* Эффект свечения кнопки */
+        .btn-glow {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(135deg, 
+                rgba(80, 120, 200, 0.4) 0%, 
+                rgba(60, 100, 180, 0.4) 100%);
+
+
+border-radius: 75px;
+            filter: blur(20px);
+            opacity: 0;
+            z-index: -1;
+            animation: btnGlowPulse 4s ease-in-out infinite;
+            transition: opacity 0.5s ease;
+        }
+
+        @keyframes btnGlowPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
+        .download-btn:hover .btn-glow {
+            opacity: 0.8;
+            animation: btnGlowIntense 1.5s ease-in-out infinite;
+        }
+
+        @keyframes btnGlowIntense {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 0.9; }
+        }
+        
+        /* Полоски света на кнопке */
+        .btn-shine {
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.15), 
+                transparent);
+            transform: skewX(-25deg);
+            transition: left 1s ease;
+        }
+        
+        .download-btn:hover .btn-shine {
+            left: 150%;
+            transition: left 0.8s ease;
+        }
+
+        /* Декоративные элементы */
+        .corner-decoration {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(100, 150, 255, 0.2);
+            z-index: 2;
+        }
+
+        .corner-tl {
+            top: 20px;
+            left: 20px;
+            border-right: none;
+            border-bottom: none;
+            animation: cornerTL 6s ease-in-out infinite;
+        }
+
+        .corner-tr {
+            top: 20px;
+            right: 20px;
+            border-left: none;
+            border-bottom: none;
+            animation: cornerTR 6s ease-in-out infinite;
+        }
+
+        .corner-bl {
+            bottom: 20px;
+            left: 20px;
+            border-right: none;
+            border-top: none;
+            animation: cornerBL 6s ease-in-out infinite;
+        }
+
+        .corner-br {
+            bottom: 20px;
+            right: 20px;
+            border-left: none;
+            border-top: none;
+            animation: cornerBR 6s ease-in-out infinite;
+        }
+
+        @keyframes cornerTL {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(5px, 5px); }
+        }
+
+        @keyframes cornerTR {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-5px, 5px); }
+        }
+
+        @keyframes cornerBL {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(5px, -5px); }
+        }
+
+        @keyframes cornerBR {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-5px, -5px); }
+        }
+
+        /* Адаптивность */
+        max-width: 768px {
+            .title {
+                font-size: 4rem;
+                letter-spacing: 3px;
+            }
+            
+            .download-btn {
+                font-size: 1.6rem;
+                padding: 22px 60px;
+            }
+            
+            .container {
+                padding: 50px 30px;
+                border-radius: 25px;
+            }
+        }
+        
+        max-width: 480px {
+            .title {
+                font-size: 3rem;
+                letter-spacing: 2px;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .download-btn {
+                font-size: 1.3rem;
+                padding: 20px 45px;
+            }
+            
+            .container {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Сетка фона -->
+    <div class="grid-lines"></div>
+    
+    <!-- Плавающие формы -->
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+    
+    <!-- Звездное не
+
+
+бо -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Декоративные уголки -->
+    <div class="corner-decoration corner-tl"></div>
+    <div class="corner-decoration corner-tr"></div>
+    <div class="corner-decoration corner-bl"></div>
+    <div class="corner-decoration corner-br"></div>
+    
+    <div class="container">
+        <div class="title-container">
+            <h1 class="title">NewLight</h1>
+            <p class="subtitle">Инновационный продукт нового поколения</p>
+        </div>
+        <a href="https://disk.yandex.ru/d/nMSXH9OEcLSjuw" target="_blank" class="download-btn">
+            <div class="btn-glow"></div>
+            <div class="btn-shine"></div>
+            <i class="fas fa-download"></i> СКАЧАТЬ
+        </a>
+    </div>
+
+    <script>
+        // Создание звездного неба
+        document.addEventListener('DOMContentLoaded', function() {
+            const starsContainer = document.getElementById('stars');
+            
+            // Создаем звезды
+            for (let i = 0; i < 250; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Случайные параметры
+                const size = Math.random() * 2.5 + 0.5;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 2 + 1.5;
+                const isFast = Math.random() > 0.7;
+                
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${posX}%`;
+                star.style.top = `${posY}%`;
+                star.style.animationDelay = `${delay}s`;
+                star.style.animationDuration = isFast ? `${duration/2}s` : `${duration}s`;
+                star.style.opacity = Math.random() * 0.7 + 0.3;
+                
+                // Добавляем случайный цвет некоторым звездам
+                if (Math.random() > 0.8) {
+                    const hue = Math.random() * 60 + 200; // Синие оттенки
+                    star.style.backgroundColor = `hsla(${hue}, 70%, 90%, 0.9)`;
+                }
+                
+                starsContainer.appendChild(star);
+            }
+            
+            // Параллакс эффект при движении мыши
+            document.addEventListener('mousemove', (e) => {
+                const container = document.querySelector('.container');
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+                
+                container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            });
+            
+            // Сброс трансформации при уходе мыши
+            document.addEventListener('mouseleave', () => {
+                const container = document.querySelector('.container');
+                container.style.transform = 'rotateY(0deg) rotateX(0deg)';
+                container.style.transition = 'transform 0.5s ease';
+            });
+            
+            // Анимация появления элементов
+            const title = document.querySelector('.title');
+            const btn = document.querySelector('.download-btn');
+            
+            setTimeout(() => {
+                title.style.opacity = '0';
+                title.style.transform = 'translateY(30px) scale(0.9)';
+                title.style.display = 'block';
+                
+                setTimeout(() => {
+                    title.style.transition = 'opacity 1.2s ease, transform 1.2s ease';
+                    title.style.opacity = '1';
+                    title.style.transform = 'translateY(0) scale(1)';
+                }, 100);
+            }, 300);
+            
+            setTimeout(() => {
+                btn.style.opacity = '0';
+                btn.style.transform = 'translateY(30px) scale(0.9)';
+                btn.style.display = 'inline-flex';
